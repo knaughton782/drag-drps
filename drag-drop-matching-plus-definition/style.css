@@ -1,0 +1,184 @@
+/*------------------------------------*\
+    #VARIABLES
+\*------------------------------------*/
+/*------------------------------------*\
+    #MISSING WORD QUIZ
+\*------------------------------------*/
+body {
+  margin: 25px auto;
+  text-align: left;
+  max-width: 1000px;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+/**
+ * Quiz container/wrapper.
+ */
+.missing-words {
+  position: relative;
+}
+
+/**
+ * `ul` containing quiz draggable answers.
+ */
+.missing-words__answers {
+  background: #e1f2fb;
+  border-radius: 4px;
+  margin-bottom: 40px;
+  padding: 20px 20px 10px;
+  text-shadow: none;
+  transform: translateZ(0);
+}
+
+/**
+ * `li` that contain draggable components `missing-words__draggable`
+ * Items are rotated for a more random/scattered paper look.
+ */
+.missing-words__answers-item {
+  background: none;
+  display: inline-block;
+  min-height: 40px;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  transition: transform .25s ease-in;
+  vertical-align: top;
+}
+.missing-words__answers-item:nth-child(3n+1) {
+  transform: rotate(-2deg);
+}
+.missing-words__answers-item:nth-child(3n+1):hover {
+  transform: rotate(0);
+}
+.missing-words__answers-item:nth-child(3n+2) {
+  transform: rotate(2deg);
+}
+.missing-words__answers-item:nth-child(3n+2):hover {
+  transform: rotate(0);
+}
+
+/**
+ * Quiz draggable items.
+ */
+.missing-words__draggable {
+  background: #fef3d0;
+  box-shadow: inset 1px 1px 0 white, 1px 1px 2px rgba(0, 0, 0, 0.2);
+  color: #197dac;
+  cursor: grab;
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  padding: 10px 20px;
+  position: relative;
+  white-space: nowrap;
+}
+.missing-words__draggable:after {
+  /* background: url(../img/interface/btn-shadow.png) no-repeat right bottom; */
+  content: "";
+  display: block;
+  height: 9px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transition: all .50s;
+  width: 100%;
+}
+.missing-words__draggable:hover {
+  cursor: hand;
+}
+.missing-words__draggable:hover:after {
+  height: 3px;
+  opacity: .5;
+  bottom: -3px;
+}
+.missing-words__draggable:active {
+  cursor: grabbing;
+}
+
+/**
+ * Droppable area items can be dragged over.
+ * Class of `.answered` is added when answer is correct/matches so * *styling can be changed/overwritten.
+ */
+.missing-words__blank {
+  background: white;
+  border: 4px solid #4cb0df;
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: inline-block;
+  min-height: 40px;
+  letter-spacing: 1px;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+}
+.missing-words__blank + .missing-words__blank {
+  margin-top: 10px;
+}
+.missing-words__blank.answered {
+  background: #b2b74f;
+  border-color: #8e923f;
+  transition: all .25s;
+}
+.missing-words__blank.answered .missing-words__draggable {
+  background: none;
+  box-shadow: none;
+  color: white;
+  cursor: default;
+  height: auto !important;
+  padding: 10px 5px;
+  white-space: normal;
+  width: auto !important;
+  vertical-align: middle;
+}
+.missing-words__blank.answered .missing-words__draggable:after {
+  display: none;
+}
+
+/**
+ * Depending on if the quiz is in a `table` or a `ul` there's some specific
+ * styling for each.
+ */
+.missing-words__table,
+.missing-words__list {
+  color: #406d80;
+  font-family: Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+}
+
+/**
+ * Quiz `table` specific styling.
+ */
+.missing-words__table tr:first-child td:first-child {
+  border-radius: 4px 0 0 0;
+}
+.missing-words__table tr:first-child td:last-child {
+  border-radius: 0 4px 0 0;
+}
+.missing-words__table tr:last-child td:first-child {
+  border-radius: 0 0 0 4px;
+}
+.missing-words__table tr:last-child td:last-child {
+  border-radius: 0 0 4px 0;
+}
+.missing-words__table th,
+.missing-words__table td {
+  border-color: white !important;
+}
+.missing-words__table th.has-rip,
+.missing-words__table td.has-rip {
+  padding: 20px;
+}
+.missing-words__table td {
+  background-color: #e1f2fb;
+  vertical-align: middle;
+}
+.missing-words__table td.has-rip {
+  /* background: #e1f2fb url(../img/interface/zig-zag.png) repeat-y left top; */
+  background: #e1f2fb;
+}
