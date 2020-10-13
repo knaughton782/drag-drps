@@ -1,160 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Drag and Drop</title>
   <style>
-body {
-  margin: 0 auto;
-  text-align: left;
-  max-width: 1000px;
-}
-table {
-  margin-bottom: 25px;
-}
-th,td {
-  padding: 10px;
-}
-/* Quiz container/wrapper. */ 
-.missing-words {
-  position: relative;
-}
-/* `ul` containing quiz draggable answers. */
-.missing-words__answers {
-  background: #e1f2fb;
-  border-radius: 4px;
-  margin-bottom: 40px;
-  padding: 20px 20px 10px;
-  text-shadow: none;
-  transform: translateZ(0);
-}
-/* `li` that contain draggable components `missing-words__draggable`. Items can be rotated for a more random/scattered paper look. */
-.missing-words__answers-item {
-  background: none;
-  display: inline-block;
-  min-height: 40px;
-  margin: 0 10px 10px 0;
-  padding: 0;
-  transition: transform .25s ease-in;
-  vertical-align: top;
-}
-.missing-words__answers-item:nth-child(3n+1) {
-  transform: rotate(-2deg);
-}
-.missing-words__answers-item:nth-child(3n+1):hover {
-  transform: rotate(0);
-}
-.missing-words__answers-item:nth-child(3n+2) {
-  transform: rotate(2deg);
-}
-.missing-words__answers-item:nth-child(3n+2):hover {
-  transform: rotate(0);
-}
-/* Quiz draggable items. */
-.missing-words__draggable {
-  background: #fef3d0;
-  box-shadow: inset 1px 1px 0 white, 1px 1px 2px rgba(0, 0, 0, 0.2);
-  color: #197dac;
-  cursor: grab;
-  display: block;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 18px;
-  padding: 10px 20px;
-  position: relative;
-  white-space: nowrap;
-}
-.missing-words__draggable:after {
-  background: url(../img/interface/btn-shadow.png) no-repeat right bottom;
-  content: "";
-  display: block;
-  height: 9px;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  transition: all .50s;
-  width: 100%;
-}
-.missing-words__draggable:hover {
-  cursor: hand;
-}
-.missing-words__draggable:hover:after {
-  height: 3px;
-  opacity: .5;
-  bottom: -3px;
-}
-.missing-words__draggable:active {
-  cursor: grabbing;
-}
-/* Droppable area items can be dragged over. Class of `.answered` is added when answer is correct/matches so styling can be changed/overwritten. */
-.missing-words__blank {
-  background: white;
-  border: 4px solid #4cb0df;
-  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  display: inline-block;
-  min-height: 40px;
-  letter-spacing: 1px;
-  text-align: center;
-  vertical-align: middle;
-  width: 100%;
-}
-.missing-words__blank + .missing-words__blank {
-  margin-top: 10px;
-}
-.missing-words__blank.answered {
-  background: #b2b74f;
-  border-color: #8e923f;
-  transition: all .25s;
-}
-.missing-words__blank.answered .missing-words__draggable {
-  background: none;
-  box-shadow: none;
-  color: white;
-  cursor: default;
-  height: auto !important;
-  padding: 10px 5px;
-  white-space: normal;
-  width: auto !important;
-  vertical-align: middle;
-}
-.missing-words__blank.answered .missing-words__draggable:after {
-  display: none;
-}
-/* Depending on if the quiz is in a `table` or a `ul` there's some specific styling for each. */
-.missing-words__table,
-.missing-words__list {
-  color: #406d80;
-  font-family: Helvetica, Arial, sans-serif;
-  letter-spacing: 1px;
-  line-height: 1.2em;
-}
+    body {
+      margin: 0 auto;
+      text-align: left;
+      max-width: 1000px;
+    }
 
-/**
+    table {
+      margin-bottom: 25px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+    }
+
+    /* Quiz container/wrapper. */
+    .missing-words {
+      position: relative;
+    }
+
+    /* `ul` containing quiz draggable answers. */
+    .missing-words__answers {
+      background: #e1f2fb;
+      border-radius: 4px;
+      margin-bottom: 40px;
+      padding: 20px 20px 10px;
+      text-shadow: none;
+      transform: translateZ(0);
+    }
+
+    /* `li` that contain draggable components `missing-words__draggable`. Items can be rotated for a more random/scattered paper look. */
+    .missing-words__answers-item {
+      background: none;
+      display: inline-block;
+      min-height: 40px;
+      margin: 0 10px 10px 0;
+      padding: 0;
+      transition: transform .25s ease-in;
+      vertical-align: top;
+    }
+
+    .missing-words__answers-item:nth-child(3n+1) {
+      transform: rotate(-2deg);
+    }
+
+    .missing-words__answers-item:nth-child(3n+1):hover {
+      transform: rotate(0);
+    }
+
+    .missing-words__answers-item:nth-child(3n+2) {
+      transform: rotate(2deg);
+    }
+
+    .missing-words__answers-item:nth-child(3n+2):hover {
+      transform: rotate(0);
+    }
+
+    /* Quiz draggable items. */
+    .missing-words__draggable {
+      background: #fef3d0;
+      box-shadow: inset 1px 1px 0 white, 1px 1px 2px rgba(0, 0, 0, 0.2);
+      color: #197dac;
+      cursor: grab;
+      display: block;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 18px;
+      padding: 10px 20px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .missing-words__draggable:after {
+      background: url(../img/interface/btn-shadow.png) no-repeat right bottom;
+      content: "";
+      display: block;
+      height: 9px;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      transition: all .50s;
+      width: 100%;
+    }
+
+    .missing-words__draggable:hover {
+      cursor: hand;
+    }
+
+    .missing-words__draggable:hover:after {
+      height: 3px;
+      opacity: .5;
+      bottom: -3px;
+    }
+
+    .missing-words__draggable:active {
+      cursor: grabbing;
+    }
+
+    /* Droppable area items can be dragged over. Class of `.answered` is added when answer is correct/matches so styling can be changed/overwritten. */
+    .missing-words__blank {
+      background: white;
+      border: 4px solid #4cb0df;
+      box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      display: inline-block;
+      min-height: 40px;
+      letter-spacing: 1px;
+      text-align: center;
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    .missing-words__blank+.missing-words__blank {
+      margin-top: 10px;
+    }
+
+    .missing-words__blank.answered {
+      background: #b2b74f;
+      border-color: #8e923f;
+      transition: all .25s;
+    }
+
+    .missing-words__blank.answered .missing-words__draggable {
+      background: none;
+      box-shadow: none;
+      color: white;
+      cursor: default;
+      height: auto !important;
+      padding: 10px 5px;
+      white-space: normal;
+      width: auto !important;
+      vertical-align: middle;
+    }
+
+    .missing-words__blank.answered .missing-words__draggable:after {
+      display: none;
+    }
+
+    /* Depending on if the quiz is in a `table` or a `ul` there's some specific styling for each. */
+    .missing-words__table,
+    .missing-words__list {
+      color: #406d80;
+      font-family: Helvetica, Arial, sans-serif;
+      letter-spacing: 1px;
+      line-height: 1.2em;
+    }
+
+    /**
  * table specific styling
  */
-.missing-words__table tr:first-child td:first-child {
-  border-radius: 4px 0 0 0;
-}
-.missing-words__table tr:first-child td:last-child {
-  border-radius: 0 4px 0 0;
-}
-.missing-words__table tr:last-child td:first-child {
-  border-radius: 0 0 0 4px;
-}
-.missing-words__table tr:last-child td:last-child {
-  border-radius: 0 0 4px 0;
-}
-.missing-words__table th,
-.missing-words__table td {
-  border-color: white !important;
-}
-.missing-words__table td {
-  background-color: #e1f2fb;
-  vertical-align: middle;
-}
+    .missing-words__table tr:first-child td:first-child {
+      border-radius: 4px 0 0 0;
+    }
 
+    .missing-words__table tr:first-child td:last-child {
+      border-radius: 0 4px 0 0;
+    }
+
+    .missing-words__table tr:last-child td:first-child {
+      border-radius: 0 0 0 4px;
+    }
+
+    .missing-words__table tr:last-child td:last-child {
+      border-radius: 0 0 4px 0;
+    }
+
+    .missing-words__table th,
+    .missing-words__table td {
+      border-color: white !important;
+    }
+
+    .missing-words__table td {
+      background-color: #e1f2fb;
+      vertical-align: middle;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
@@ -165,33 +191,30 @@ th,td {
   <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 
   <body>
-    <h1>Effectiveness of IMC Tools</h1>
+    <h1>Building Brand Equity</h1>
     <div class="missing-words">
-      Indicate if the effectiveness of each IMC tool is high, medium, or low in each stage of the purchasing decision process. Drag the answer to the space. The correct answers will lock in and turn green.
+      Indicate which IMC tool will be most effective in building brand equity. Drag the answer to the space. The correct answers will lock in and turn green.
       <ul class="missing-words__answers">
         <!-- Medium-High: word-1 -->
         <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
-        
+
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
-        
+
         <!-- Low: word-3  -->
         <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
+
         <!-- Low-Medium: word-2  -->
         <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
-        
+
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
-        
+
         <!-- Low-Medium: word-2  -->
         <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+
+        <!-- high: word-4 -->
+        <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
@@ -199,20 +222,11 @@ th,td {
         <!-- Medium-High: word-1 -->
         <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
         
-        <!-- Medium-High: word-1 -->
-        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
-        
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Medium-High: word-1 -->
-        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
-        
-        <!-- Medium-High: word-1 -->
-        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
+        <!-- high: word-4 -->
+        <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
         <!-- Medium-High: word-1 -->
         <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
@@ -220,93 +234,58 @@ th,td {
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Low-Medium: word-2  -->
-        <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
-        
-        <!-- Low-Medium: word-2  -->
-        <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Low-Medium: word-2  -->
-        <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-      
-        <!-- Medium: word-5  -->
-        <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Medium: word-5  -->
-        <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
-        
-        <!-- Medium: word-5  -->
-        <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Medium</span></li>
-        
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- Medium-High: word-1 -->
+        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
         
         <!-- high: word-4 -->
         <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- Medium-High: word-1 -->
+        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- high: word-4 -->
+        <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
         <!-- Low-Medium: word-2  -->
         <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Low-Medium</span></li>
         
-        <!-- Medium: word-5  -->
-        <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Medium</span></li>
+        <!-- Low-High: word-6  -->
+        <li class="missing-words__answers-item draggable word-6"><span class="missing-words__draggable draggable word-6">Low-High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- Low-High: word-6  -->
+        <li class="missing-words__answers-item draggable word-6"><span class="missing-words__draggable draggable word-6">Low-High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- Extremly High: word-7  -->
+        <li class="missing-words__answers-item draggable word-7"><span class="missing-words__draggable draggable word-7">Extremly High</span></li>
         
-        <!-- Low: word-3  -->
-        <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Low</span></li>
+        <!-- high: word-4 -->
+        <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">High</span></li>
         
-        <!-- Medium: word-5  -->
-        <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Medium</span></li>
+        <!-- Medium-High: word-1 -->
+        <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Medium-High</span></li>
         
-        
+        <!-- Low-High: word-6  -->
+        <li class="missing-words__answers-item draggable word-6"><span class="missing-words__draggable draggable word-6">Low-High</span></li>
+
+
       </ul>
 
       <table class="missing-words__table" style="width: 100%;">
-        <caption style="text-align: left;">Purchase Decision Process<hr></caption>
-        
+        <caption style="text-align: left; display: none;">Brand Equity
+          <hr>
+        </caption>
+        <hr>
         <thead>
           <tr>
             <th>IMC Tools</th>
-            <th colspan="5" style="text-align: center;">Purchase Decision Process Stages</th>
+            <th colspan="5" style="text-align: center;">Steps to Build Brand Equity</th>
           </tr>
           <tr>
-            <td style="width: 16.67%;"></td>
-            <td style="text-align:center; width: 16.67%;">Problem Recognition</td>
-            <td style="text-align:center; width: 16.67%;">Information Search</td>
-            <td style="text-align:center; width: 16.67%;">Evaluation of Alternatives</td>
-            <td style="text-align:center; width: 16.67%;">Purchase Decision</td>
-            <td style="text-align:center; width: 16.67%;">Post-Purchase Decision</td>
+            <td style="width: 25%;"></td>
+            <td style="text-align:center; width: 25%;">Brand Awareness</td>
+            <td style="text-align:center; width: 25%;">Brand Meaning</td>
+            <td style="text-align:center; width: 25%;">Brand Loyalty</td>
+
           </tr>
         </thead>
         <tbody>
@@ -319,14 +298,9 @@ th,td {
               <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-5"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-1"></span>
-            </td>
+
           </tr>
 
 
@@ -336,113 +310,84 @@ th,td {
               <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-5"></span>
+              <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-4"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
+
           </tr>
 
 
           <tr>
             <td>Public Relations (PR)</td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-2"></span>
+              <span class="missing-words__blank blank" data-accept="word-6"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-6"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-6"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-2"></span>
-            </td>
+
           </tr>
-          
+
 
           <tr>
-            <td>Personal Selling<td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
+            <td>Personal Selling
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
             <td>
               <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-4"></span>
-            </td>
-            <td>
               <span class="missing-words__blank blank" data-accept="word-2"></span>
             </td>
+
           </tr>
 
           <tr>
             <td>Sales Promotion</td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-1"></span>
             </td>
             <td>
               <span class="missing-words__blank blank" data-accept="word-3"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-2"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-4"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
+
           </tr>
 
           <tr>
             <td>Sponsorships</td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
               <span class="missing-words__blank blank" data-accept="word-2"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-2"></span>
-            </td>
+
           </tr>
 
           <tr>
             <td>Events & Experiences</td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-3"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-5"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-2"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
               <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
+            <td>
+              <span class="missing-words__blank blank" data-accept="word-7"></span>
+            </td>
+
           </tr>
 
 
@@ -452,17 +397,12 @@ th,td {
               <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-5"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
             <td>
-              <span class="missing-words__blank blank" data-accept="word-1"></span>
+              <span class="missing-words__blank blank" data-accept="word-4"></span>
             </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-1"></span>
-            </td>
-            <td>
-              <span class="missing-words__blank blank" data-accept="word-1"></span>
-            </td>
+
           </tr>
 
         </tbody>
@@ -471,47 +411,47 @@ th,td {
     </div>
 
   </body>
- 
+
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
   <script>
     // Make words draggable with revert = true
 
-      score = 0;
-      if ($('.draggable')[0]) {
-        $('.draggable').draggable({
-          revert: true,
-          snapTolerance: 30,
-          revertDuration: 0,
-          cursor: "move"
-        });
+    score = 0;
+    if ($('.draggable')[0]) {
+      $('.draggable').draggable({
+        revert: true,
+        snapTolerance: 30,
+        revertDuration: 0,
+        cursor: "move"
+      });
+    }
+
+    // Make blank spaces accept corresponding word
+
+    $('.blank').each(function (index) {
+
+      toAccept = $(this)[0].dataset.accept;
+      // Resize spans to correct answer
+      if ($(this).hasClass('resizable')) {
+        answer = $('.draggable.' + toAccept);
+        width = answer[0].scrollWidth;
+        width = width - ($(this).css('padding-left').replace('px', '') * 2);
+        $(this).css('width', width);
       }
 
-      // Make blank spaces accept corresponding word
+      $(this).droppable({
+        accept: '.' + toAccept,
+        drop: function (event, ui) {
+          $(this).append(ui.draggable);
+          $(this).addClass('answered');
 
-      $('.blank').each(function (index) {
-
-        toAccept = $(this)[0].dataset.accept;
-        // Resize spans to correct answer
-        if ($(this).hasClass('resizable')) {
-          answer = $('.draggable.' + toAccept);
-          width = answer[0].scrollWidth;
-          width = width - ($(this).css('padding-left').replace('px', '') * 2);
-          $(this).css('width', width);
+          score++;
+          $(ui.draggable).draggable('destroy');
+          $(this).droppable("destroy");
         }
-
-        $(this).droppable({
-          accept: '.' + toAccept,
-          drop: function (event, ui) {
-            $(this).append(ui.draggable);
-            $(this).addClass('answered');
-
-            score++;
-            $(ui.draggable).draggable('destroy');
-            $(this).droppable("destroy");
-          }
-        });
       });
+    });
   </script>
 
 </body>
