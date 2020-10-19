@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Matching</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  <style>
+    body {
+      margin: 0 auto;
+      text-align: left;
+      max-width: 1000px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+    }
+
+    /**
+ * Quiz container/wrapper.
+ */
+    .missing-words {
+      position: relative;
+    }
+
+    /**
+ * `ul` containing quiz draggable answers.
+ */
+    .missing-words__answers {
+      background: #e1f2fb;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      padding: 20px 20px 10px;
+      text-shadow: none;
+      transform: translateZ(0);
+    }
+
+    /**
+ * `li` that contain draggable components `missing-words__draggable`
+ * Items are rotated for a more random/scattered paper look.
+ */
+    .missing-words__answers-item {
+      background: none;
+      display: inline-block;
+      min-height: 40px;
+      margin: 0 10px 10px 0;
+      padding: 0;
+      transition: transform .25s ease-in;
+      vertical-align: top;
+    }
+
+    .missing-words__answers-item:nth-child(3n+1) {
+      transform: rotate(-2deg);
+    }
+
+    .missing-words__answers-item:nth-child(3n+1):hover {
+      transform: rotate(0);
+    }
+
+    .missing-words__answers-item:nth-child(3n+2) {
+      transform: rotate(2deg);
+    }
+
+    .missing-words__answers-item:nth-child(3n+2):hover {
+      transform: rotate(0);
+    }
+
+    /**
+ * Quiz draggable items.
+ */
+    .missing-words__draggable {
+      background: #fef3d0;
+      box-shadow: inset 1px 1px 0 white, 1px 1px 2px rgba(0, 0, 0, 0.2);
+      color: #197dac;
+      cursor: grab;
+      display: block;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 18px;
+      padding: 10px 20px;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .missing-words__draggable:after {
+      background: url(../img/interface/btn-shadow.png) no-repeat right bottom;
+      content: "";
+      display: block;
+      height: 9px;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      transition: all .50s;
+      width: 100%;
+    }
+
+    .missing-words__draggable:hover {
+      cursor: hand;
+    }
+
+    .missing-words__draggable:hover:after {
+      height: 3px;
+      opacity: .5;
+      bottom: -3px;
+    }
+
+    .missing-words__draggable:active {
+      cursor: grabbing;
+    }
+
+    /**
+ * Droppable area items can be dragged over.
+ * Class of `.answered` is added when answer is correct/matches so styling can
+ * be changed/overwritten.
+ */
+    .missing-words__blank {
+      background: white;
+      border: 4px solid #4cb0df;
+      box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      display: inline-block;
+      min-height: 40px;
+      letter-spacing: 1px;
+      text-align: center;
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    .missing-words__blank+.missing-words__blank {
+      margin-top: 10px;
+    }
+
+    .missing-words__blank.answered {
+      background: #b2b74f;
+      border-color: #8e923f;
+      transition: all .25s;
+    }
+
+    .missing-words__blank.answered .missing-words__draggable {
+      background: none;
+      box-shadow: none;
+      color: white;
+      cursor: default;
+      height: auto !important;
+      padding: 10px 5px;
+      white-space: normal;
+      width: auto !important;
+      vertical-align: middle;
+    }
+
+    .missing-words__blank.answered .missing-words__draggable:after {
+      display: none;
+    }
+
+    /**
+ * Depending on if the quiz is in a `table` or a `ul` there's some specific
+ * styling for each.
+ */
+    .missing-words__table,
+    .missing-words__list {
+      color: #406d80;
+      font-family: Helvetica, Arial, sans-serif;
+      letter-spacing: 1px;
+      line-height: 1.2em;
+    }
+
+    /**
+ * Quiz `table` specific styling.
+ */
+    .missing-words__table tr:first-child td:first-child {
+      border-radius: 4px 0 0 0;
+    }
+
+    .missing-words__table tr:first-child td:last-child {
+      border-radius: 0 4px 0 0;
+    }
+
+    .missing-words__table tr:last-child td:first-child {
+      border-radius: 0 0 0 4px;
+    }
+
+    .missing-words__table tr:last-child td:last-child {
+      border-radius: 0 0 4px 0;
+    }
+
+    .missing-words__table th,
+    .missing-words__table td {
+      border-color: white !important;
+    }
+
+    .missing-words__table th.has-rip,
+    .missing-words__table td.has-rip {
+      padding-left: 40px;
+    }
+
+    .missing-words__table td {
+      background-color: #e1f2fb;
+      vertical-align: middle;
+    }
+
+    .missing-words__table td.has-rip {
+      background: #e1f2fb url(../img/interface/zig-zag.png) repeat-y left top;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <h1>Matching Activity</h1>
+  <div class="missing-words">
+    Please match the term with its correct definition. The correct term will lock in and turn green.
+    <ul class="missing-words__answers">
+      <li class="missing-words__answers-item draggable word-3"><span class="missing-words__draggable draggable word-3">Consequences of Testing</span></li>
+      <li class="missing-words__answers-item draggable word-4"><span class="missing-words__draggable draggable word-4">Content</span></li>
+      <li class="missing-words__answers-item draggable word-2"><span class="missing-words__draggable draggable word-2">Response Processes</span></li>
+      <li class="missing-words__answers-item draggable word-5"><span class="missing-words__draggable draggable word-5">Relations with other Variables/Criteria</span></li>
+      <li class="missing-words__answers-item draggable word-1"><span class="missing-words__draggable draggable word-1">Internal Structure/Construct</span></li>
+    </ul>
+
+    <table class="missing-words__table">
+      <thead>
+        <tr style="visibility: hidden;">
+          <th style="width: 35%;" class="has-rip">Term</th>
+          <th style="width: 65%;">Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="has-rip">
+          <span class="missing-words__blank blank" data-accept="word-1"></span>
+        </td>
+          <td>Focuses on whether the conceptual framework used in test development could be demonstrated using appropriate analytical techniques</td>
+        </tr>
+        <tr>
+          <td class="has-rip">
+            <span class="missing-words__blank blank" data-accept="word-2"></span>
+          </td>
+          <td>Observing test takers as they respond to the test and/or interviewing them when they complete the test--these observations help understand mental processes that test takers use when responding to questions</td>
+        </tr>
+        <tr>
+          <td class="has-rip">
+            <span class="missing-words__blank blank" data-accept="word-3"></span>
+          </td>
+          <td>Any time a psychological measurement occurs, both intended and unintended consequences can happen; just because different groups score differently on a test does not automatically mean that the test is biased</td>
+        </tr>
+        <tr>
+          <td class="has-rip">
+            <span class="missing-words__blank blank" data-accept="word-4"></span>
+          </td>
+          <td>Logically examining and evaluating the content of a test to determine the extent that the content is representative of the concepts that the test is designed to measure without either underrepresenting those concepts or including elements that are irrelevant</td>
+        </tr>
+        <tr>
+          <td class="has-rip">
+            <span class="missing-words__blank blank" data-accept="word-5"></span>
+          </td>
+          <td>Typically involves correlating test scores with other measures to determine whether those scores are related to other measures to which we would expect them to relate</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+  <script>
+    // Make words draggable with revert = true
+    score = 0;
+    if ($('.draggable')[0]) {
+      $('.draggable').draggable({
+        revert: true,
+        snapTolerance: 30,
+        revertDuration: 0,
+        cursor: "move"
+      });
+    }
+
+    // Make blank spaces accept corresponding word
+    $('.blank').each(function (index) {
+
+      toAccept = $(this)[0].dataset.accept;
+      // Resize spans to correct answer
+      if ($(this).hasClass('resizable')) {
+        answer = $('.draggable.' + toAccept);
+        width = answer[0].scrollWidth;
+        width = width - ($(this).css('padding-left').replace('px', '') * 2);
+        $(this).css('width', width);
+      }
+
+      $(this).droppable({
+        accept: '.' + toAccept,
+        drop: function (event, ui) {
+          $(this).append(ui.draggable);
+          $(this).addClass('answered');
+
+          score++;
+          $(ui.draggable).draggable('destroy');
+          $(this).droppable("destroy");
+        }
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>
