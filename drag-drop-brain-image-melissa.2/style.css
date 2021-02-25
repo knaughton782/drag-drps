@@ -1,0 +1,163 @@
+body {
+margin: 0 auto;
+text-align: left;
+/***** you can adjust the width here for the total width of the interaction. It should be larger than the background image dimensions ****************/
+width: 750px;
+/* use border for dev to determine edges, comment out before hosting on server or in live environment  */
+/* border: 1px solid red; */
+}
+
+/* whole interaction container ************/
+.container {
+    position: relative;
+    z-index: 0;
+}
+
+/* list of draggable answers ***********/
+.answers-list {
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 20px 20px 10px;
+    text-shadow: none;
+    transform: translateZ(0);
+    /* adjust the height of the draggable answers section here  */
+    height: 30px;
+}
+
+/* list item that holds draggable answers in a span `answer-draggable` */
+.answers-list-item {
+    background: none;
+    display: inline-block;
+    height: 40px;
+    margin: 0 5px 10px 0;
+    padding: 0;
+    transition: transform .25s ease-in;
+    vertical-align: top;
+    z-index: 1;
+}
+
+/* span for draggable items (answers) */
+.answer-draggable {
+    background: #fef3d0;
+    box-shadow: inset 1px 1px 0 white, 1px 1px 2px rgba(0, 0, 0, 0.2);
+    color: #197dac;
+    cursor: grab;
+    display: block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 10px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.answer-draggable:after {
+    background: url(../img/interface/btn-shadow.png) no-repeat right bottom;
+    content: "";
+    display: block;
+    height: 9px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transition: all .50s;
+    width: 100%;
+}
+
+.answer-draggable:hover {
+    cursor: hand;
+}
+
+.answer-draggable:hover:after {
+    height: 3px;
+    opacity: .5;
+    bottom: -3px;
+}
+
+.answer-draggable:active {
+    cursor: grabbing;
+}
+/* end draggable answer section ********** */
+
+
+/* Image area items are dragged into. `.answered` class is added when answer is correct so styling can be changed.
+*/
+.answer-blank {
+    background: white;
+    border: 4px solid #4cb0df;
+    box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: inline-block;
+    min-height: 40px;
+    letter-spacing: 1px;
+    text-align: center;
+    vertical-align: middle;
+    width: 200px;
+    margin: 5px;
+    /* z-index: -1; */
+}
+
+.answer-blank.answered {
+    background: #75d371;
+    border-color: #4db34a;
+    transition: all .25s;
+}
+
+.answer-blank.answered .answer-draggable {
+    background: none;
+    box-shadow: none;
+    color: white;
+    cursor: default;
+    height: auto !important;
+    padding: 10px 5px;
+    white-space: normal;
+    width: auto !important;
+    vertical-align: middle;
+}
+
+.answer-blank.answered .answer-draggable:after {
+    display: none;
+}
+/* insert background image here  */
+.img-background {
+    background: url(human_brain.jpg);
+    background-position: center;
+    /***** WxH here should match or be slightly be larger than the background image dimensions ****************/
+    width: 600px;
+    height: 530px;
+    margin: auto;
+    z-index: -10;
+}
+
+/* position the blanks in the correction location on the image here */
+.ans1 {
+    position: absolute;
+    bottom: 120px;
+    left: 57px; 
+}
+.ans2 {
+    position: absolute;
+    top: 180px;
+    right: 20px;
+}
+.ans3 {
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+}
+.ans4 {
+    position: absolute;
+    top: 268px;
+    right: 10px;
+}
+.ans5 {
+    position: absolute;
+    top: 175px;
+    left: 15px;
+}
+.ans6 {
+    position: absolute;
+    bottom: 58px;
+    left: 105px;
+}
