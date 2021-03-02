@@ -121,7 +121,7 @@ width: 750px;
 }
 /* insert background image here  */
 .img-background {
-    background: url(brain_parts.png);
+    background: url(human_brain_front.png);
     background-position: center;
     /***** WxH here should match or be slightly be larger than the background image dimensions ****************/
     width: 500px;
@@ -133,8 +133,8 @@ width: 750px;
 /* position the blanks in the correction location on the image here */
 .ans1 {
     position: absolute;
-    bottom: 103px;
-    left: 45px; 
+    bottom: 163px;
+    left: 25px; 
 }
 .ans2 {
     position: absolute;
@@ -143,6 +143,6 @@ width: 750px;
 }
 .ans3 {
     position: absolute;
-    top: 160px;
+    top: 170px;
     left: -20px;
 }
